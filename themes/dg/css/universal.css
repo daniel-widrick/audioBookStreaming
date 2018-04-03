@@ -1,0 +1,20 @@
+body {
+	background-image: url("../images/blackPaper.png");
+}
+
+.centeredContainer {
+	width: 700px;
+	background-color: #000;
+	font-family: monospace;
+    	font-size: 3em;
+	opacity: 0.5;
+	margin: 60 auto;
+	color: #40ec4f;
+	text-align: center;
+}
+
+.loginRow input {
+	margin-bottom: 5px;
+	margin-top: 5px;
+	font-size: 1em;
+}
