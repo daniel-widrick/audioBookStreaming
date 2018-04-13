@@ -1,5 +1,6 @@
 body {
 	background-image: url("../images/blackPaper.png");
+	color: #4bf442;
 }
 
 .centeredContainer {
@@ -17,4 +18,24 @@ body {
 	margin-bottom: 5px;
 	margin-top: 5px;
 	font-size: 1em;
+}
+
+.authorList {
+	display: block;
+	width: 600px;
+	font-size: 1.5em;
+	background: #111;
+}
+
+.authorItem {
+	display: block;
+	width: 600px;
+	font-size: 2em;
+	background: #111;
+	opacity: 0.5;
+}
+
+.authorItem ul {
+	font-size: .5em;
+	display: none;
 }

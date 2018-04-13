@@ -49,7 +49,7 @@ foreach($bookList as $book)
 echo '<ul class="authorList">';
 foreach($books as $author => $book)
 {
-	echo '<li class="authorItem">' . $author;
+	echo '<li class="authorItem" onclick="authorClick(this)">' . $author;
 	echo '<ul class="bookList">';
 	foreach($book as $b)
 	{
@@ -57,3 +57,15 @@ foreach($books as $author => $book)
 	}
 	echo '</ul></li>';
 }
+
+?>
+<script type="text/javascript">
+function authorClick(el)
+{
+	var bookList = el.getElementsByClassName('bookList')[0];
+	console.log(bookList);
+	if(bookList.style.display == "") bookList.style.display = "none";
+	if(bookList.style.display == "none") bookList.style.display = "block";
+	else bookList.style.display = "none";
+}
+</script>
