@@ -32,4 +32,28 @@ if(!isset($_SESSION['username']) && (!isset($_POST['username']) || !isset($_POST
 	$_SESSION['username'] = $username;
 }	
 
+//Logged in
+include 'libraries/bookScan.php';
+$bookScan = new bookScan();
+$bookList = $bookScan->getBookList();
 
+$authors = [];
+$books = [];
+foreach($bookList as $book)
+{
+	$author = $book["author"];
+	if($author == "") $author = "Unknown";
+	$authors[] = $author;
+	$books[$author][] = $book;
+}
+echo '<ul class="authorList">';
+foreach($books as $author => $book)
+{
+	echo '<li class="authorItem">' . $author;
+	echo '<ul class="bookList">';
+	foreach($book as $b)
+	{
+		echo '<li class="bookItem">'.$b["title"].'</li>';
+	}
+	echo '</ul></li>';
+}

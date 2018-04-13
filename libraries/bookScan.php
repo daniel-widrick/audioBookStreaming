@@ -137,6 +137,3 @@ class googleApi
 	}
 }
 
-$bookScan = new bookScan();
-//$response = $bookScan->syncBooks();
-var_dump($bookScan->getBookList());
