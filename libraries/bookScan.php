@@ -47,7 +47,7 @@ class bookScan
 	{
 		$pdo = new PDO('sqlite:database/database.sqlite3');
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "select authors.author, books.title from books left join authors on authors.id = books.author order by authors.author asc";
+		$sql = "select authors.author, books.title from books left join authors on authors.id = books.author order by authors.author asc, books.title asc";
 		$searchStatement = $pdo->prepare($sql);
 		$result = $searchStatement->execute();
 		$bookList = Array();
