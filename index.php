@@ -34,38 +34,22 @@ if(!isset($_SESSION['username']) && (!isset($_POST['username']) || !isset($_POST
 
 //Logged in
 include 'libraries/bookScan.php';
+include 'libraries/display.php';
 $bookScan = new bookScan();
-$bookList = $bookScan->getBookList();
 
-$authors = [];
-$books = [];
-foreach($bookList as $book)
+//Navigation
+if(isset($_GET['book']))
 {
-	$author = $book["author"];
-	if($author == "") $author = "Unknown";
-	$authors[] = $author;
-	$books[$author][] = $book;
+	//Play Audio Book
+	$book = $bookScan->getBookById($_GET['book']);
+
+	$files = $bookScan->getBookFiles($book);
+	var_dump($files);
 }
-echo '<ul class="authorList">';
-foreach($books as $author => $book)
+else
 {
-	echo '<li class="authorItem" onclick="authorClick(this)">' . $author;
-	echo '<ul class="bookList">';
-	foreach($book as $b)
-	{
-		echo '<li class="bookItem">'.$b["title"].'</li>';
-	}
-	echo '</ul></li>';
+	echo DISPLAY::showAuthorList();
 }
 
-?>
-<script type="text/javascript">
-function authorClick(el)
-{
-	var bookList = el.getElementsByClassName('bookList')[0];
-	console.log(bookList);
-	if(bookList.style.display == "") bookList.style.display = "none";
-	if(bookList.style.display == "none") bookList.style.display = "block";
-	else bookList.style.display = "none";
-}
-</script>
+
+
