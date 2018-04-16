@@ -33,6 +33,7 @@ if(!isset($_SESSION['username']) && (!isset($_POST['username']) || !isset($_POST
 }	
 
 //Logged in
+include 'config.php';
 include 'libraries/bookScan.php';
 include 'libraries/display.php';
 $bookScan = new bookScan();
@@ -44,7 +45,7 @@ if(isset($_GET['book']))
 	$book = $bookScan->getBookById($_GET['book']);
 
 	$files = $bookScan->getBookFiles($book);
-	var_dump(DISPLAY::showBookPlayer($book,$files));
+	echo DISPLAY::showBookPlayer($book,$files);
 }
 else
 {

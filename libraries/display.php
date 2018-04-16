@@ -96,8 +96,34 @@ class DISPLAY
 				bookFile = fileIndex;
 				time = Math.floor(player.currentTime);
 				console.log("User: " + user + " is listening to " + bookid + " on file " + bookFile + " at time: " + time);
-		}; 
-			setInterval(trackTime,15000);';
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET","api/savePosition.php?book="+bookid+"&file="+bookFile+"&time="+time);
+				xhr.onload = function() {
+					if(xhr.status === 200) console.log("time Saved!");
+					else console.log("ERROR: " + xhr.status);
+				};
+				xhr.send();	
+		};';
+		$html .= 'function loadTime() {
+				var xhr = new XMLHttpRequest();
+				var bookid = "'.$book["id"].'";
+				xhr.open("GET","api/getPosition.php?book="+bookid);
+				xhr.onload = function() {
+					if(xhr.status === 200) {
+						//load time&file
+						console.log("repsone: " + xhr.responseText);
+						bookTime = JSON.parse(xhr.responseText);
+						console.log(bookTime);
+						playTrack(bookTime["file"]);
+						player.pause();
+						player.currentTime = bookTime["time"];
+						player.play();
+					}
+					else console.log("ERROR: " + xhr.status);
+				};
+				xhr.send();
+			}; loadTime();';
+		$html .= 'setInterval(trackTime,15000);';
 		
 		$html .= '</script>';
 		return $html;
