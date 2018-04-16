@@ -7,10 +7,15 @@ class bookScan
 
 	public $bookPathList;
 	public $bookTitles;
+	private $pdo;
+	public function __construct()
+	{
+		$this->pdo = new PDO('sqlite:database/database.sqlite3');
+	}
 
 	public function getAuthor($author)
 	{
-		$pdo = new PDO('sqlite:database/database.sqlite3');
+		$pdo = $this->pdo;
 		$sql = "select * from authors where author = :author";
 		$searchStmt = $pdo->prepare($sql);
 		$searchStmt->bindPAram(':author',$author);
@@ -19,7 +24,7 @@ class bookScan
 	}
 	public function addAuthor($author)
 	{
-		$pdo = new PDO('sqlite:database/database.sqlite3');
+		$pdo = $this->pdo;
 		$storedAuthor = $this->getAuthor($author);
 		if($storedAuthor === false)
 		{
@@ -30,9 +35,19 @@ class bookScan
 		}
 		return $this->getAuthor($author);
 	}
+	public function getBookById($id)
+	{
+		$query = "SELECT * from books where books.id = :bookId";
+		$search = $this->pdo->prepare($query);
+		$search->bindParam(':bookId',$id);
+		$search->execute();
+		return $search->fetch();
+	}
+		
+		
 	public function getBook($book)
 	{
-		$pdo = new PDO('sqlite:database/database.sqlite3');
+		$pdo = $this->pdo;
 		$searchQuery = "SELECT * from books where title like :title";
 		$searchStmt = $pdo->prepare($searchQuery);
 		$bookTitle = '%'.$book->title.'%';
@@ -45,9 +60,9 @@ class bookScan
 	}
 	public function getBookList()
 	{
-		$pdo = new PDO('sqlite:database/database.sqlite3');
+		$pdo = $this->pdo;
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "select authors.author, books.title from books left join authors on authors.id = books.author order by authors.author asc, books.title asc";
+		$sql = "select authors.author, books.title, books.path, books.id from books left join authors on authors.id = books.author order by authors.author asc, books.title asc";
 		$searchStatement = $pdo->prepare($sql);
 		$result = $searchStatement->execute();
 		$bookList = Array();
@@ -60,7 +75,7 @@ class bookScan
 	}
 	public function storeBook($book)
 	{
-		$pdo = new PDO('sqlite:database/database.sqlite3');
+		$pdo = $this->pdo;
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		echo "store book:" . $book->title . "\n";
 		if($this->getBook($book) === false)
@@ -99,6 +114,16 @@ class bookScan
 				$this->scanFiles($testPath);
 			}
 		}
+	}
+	public function getBookFiles($book)
+	{
+		$path = $book["path"];
+		$files = scandir($path);
+		$files = array_diff($files,array('..','.'));
+
+
+
+		return $files;
 	}
 	public function syncBooks($repository = "repository")
 	{
