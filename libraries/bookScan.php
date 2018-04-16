@@ -13,6 +13,16 @@ class bookScan
 
 
 	//$bookScan->saveTime($_GET['book'],$_SESSION['username'],$_GET['file'],$_GET['time']);
+	public function getTime($book, $user)
+	{
+		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$query = 'SELECT file, time, book, username from bookPositions where username = :username AND book = :book';
+		$searchStmt = $this->pdo->prepare($query);
+		$searchStmt->bindParam(':username',$user);
+		$searchStmt->bindParam(':book',$book);
+		$result = $searchStmt->execute();
+		return $searchStmt->fetch();
+	}
 	public function saveTime($book, $user, $file, $time)
 	{
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

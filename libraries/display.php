@@ -103,8 +103,27 @@ class DISPLAY
 					else console.log("ERROR: " + xhr.status);
 				};
 				xhr.send();	
-		}; 
-			setInterval(trackTime,15000);';
+		};';
+		$html .= 'function loadTime() {
+				var xhr = new XMLHttpRequest();
+				var bookid = "'.$book["id"].'";
+				xhr.open("GET","api/getPosition.php?book="+bookid);
+				xhr.onload = function() {
+					if(xhr.status === 200) {
+						//load time&file
+						console.log("repsone: " + xhr.responseText);
+						bookTime = JSON.parse(xhr.responseText);
+						console.log(bookTime);
+						playTrack(bookTime["file"]);
+						player.pause();
+						player.currentTime = bookTime["time"];
+						player.play();
+					}
+					else console.log("ERROR: " + xhr.status);
+				};
+				xhr.send();
+			}; loadTime();';
+		$html .= 'setInterval(trackTime,15000);';
 		
 		$html .= '</script>';
 		return $html;

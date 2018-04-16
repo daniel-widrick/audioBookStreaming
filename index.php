@@ -45,7 +45,7 @@ if(isset($_GET['book']))
 	$book = $bookScan->getBookById($_GET['book']);
 
 	$files = $bookScan->getBookFiles($book);
-	var_dump(DISPLAY::showBookPlayer($book,$files));
+	echo DISPLAY::showBookPlayer($book,$files);
 }
 else
 {
