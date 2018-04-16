@@ -96,6 +96,13 @@ class DISPLAY
 				bookFile = fileIndex;
 				time = Math.floor(player.currentTime);
 				console.log("User: " + user + " is listening to " + bookid + " on file " + bookFile + " at time: " + time);
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET","api/savePosition.php?book="+bookid+"&file="+bookFile+"&time="+time);
+				xhr.onload = function() {
+					if(xhr.status === 200) console.log("time Saved!");
+					else console.log("ERROR: " + xhr.status);
+				};
+				xhr.send();	
 		}; 
 			setInterval(trackTime,15000);';
 		
