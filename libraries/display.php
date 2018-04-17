@@ -3,6 +3,12 @@
 class DISPLAY
 {
 
+	public static function showResume()
+	{
+		$bookScan = new bookScan();
+		$books = $bookScan->getResumeList();
+		var_dump($books);
+	}
 	public static function showAuthorList()
 	{
 		$bookScan = new bookScan();

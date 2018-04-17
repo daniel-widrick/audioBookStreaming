@@ -12,6 +12,19 @@ class bookScan
 	}
 
 
+	public function getResumeList()
+	{
+		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$query = 'Select title, authors.author, thumbnail, books.id from books 
+				left join bookPositions on books.id = bookPositions.book 
+				left join authors on books.author = authors.id
+				where bookPositions.username = :username';
+		$searchStmt = $this->pdo->prepare($query);
+		$searchStmt->bindParam(':username',$_SESSION['username']);
+		$result = $searchStmt->execute();
+		$books = $searchStmt->fetchAll();
+		return $books;
+	}
 	//$bookScan->saveTime($_GET['book'],$_SESSION['username'],$_GET['file'],$_GET['time']);
 	public function getTime($book, $user)
 	{
@@ -83,7 +96,7 @@ class bookScan
 	{
 		$pdo = $this->pdo;
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "select authors.author, books.title, books.path, books.id from books left join authors on authors.id = books.author order by authors.author asc, books.title asc";
+		$sql = "select authors.author, books.title, books.path, books.id from books left join authors on authors.id = books.author order by authors.author asc, books.path, substr(books.publishDate,1,4) asc";
 		$searchStatement = $pdo->prepare($sql);
 		$result = $searchStatement->execute();
 		$bookList = Array();
@@ -98,7 +111,8 @@ class bookScan
 	{
 		$pdo = $this->pdo;
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		echo "store book:" . $book->title . "\n";
+		$book->author = str_replace('. ','.',$book->author);
+		echo "Store: $book->author :: $book->title \n";
 		if($this->getBook($book) === false)
 		{
 			$insertQuery = "INSERT INTO books (title, author, publishDate, rating, ratingsCount, thumbnail, description, id, path) VALUES(:title, :author, :publishDate, :rating, :ratingsCount, :thumbnail, :description, :id, :path)";
@@ -114,6 +128,7 @@ class bookScan
 			$insertStmt->bindParam(':id',$book->id);
 			$insertStmt->bindParam(':path',$book->path);
 			$insertStmt->execute();
+			echo "Stored: $book->author :: $book->title \n";
 		}
 	}
 
@@ -126,6 +141,7 @@ class bookScan
 			$testPath = $repository.DIRECTORY_SEPERATOR.$subPath;
 			if(!is_dir($testPath) and strpos(strtoupper($subPath),'.MP3') !== false)
 			{
+				echo "TEST: $testPath\n";
 				$this->bookPathList[] = $repository;
 				$pathParts = explode(DIRECTORY_SEPERATOR,$repository);
 				$this->bookTitles[] = $pathParts[count($pathParts)-1];
@@ -154,6 +170,8 @@ class bookScan
 		$googleApi = new googleApi();
 		foreach($this->bookTitles as $key => $title)
 		{
+			if(substr($title,0,1) == 0) $title = preg_replace('/[0-9]+/','',$title);
+			echo "Search Title: $title \n";
 			$response = $googleApi->searchByTitle($title);
 			$response->path = $this->bookPathList[$key];
 			$this->storeBook($response);

@@ -46,9 +46,13 @@ if(isset($_GET['book']))
 
 	$files = $bookScan->getBookFiles($book);
 	echo DISPLAY::showBookPlayer($book,$files);
+}elseif(isset($_GET['scan']))
+{
+	$bookScan->syncBooks();
 }
 else
 {
+	echo DISPLAY::showResume();
 	echo DISPLAY::showAuthorList();
 }
 
