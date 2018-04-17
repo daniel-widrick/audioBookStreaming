@@ -47,3 +47,24 @@ body {
 	width: 150px;
 	float: left;
 }
+#bookAudio {
+	width: 95%;
+}
+.bookThumbnail {
+	width: 300px;
+	display: block;
+	margin-left: auto;
+	margin-right:auto;
+}
+.bookThumbnail img {
+	position: realtive;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+.bookThumbnail #playOverlay {
+	z-index: 3;
+	width: 200px;
+	margin-top: -300px;
+	margin-left: 50px;
+}

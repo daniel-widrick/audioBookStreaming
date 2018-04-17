@@ -64,9 +64,11 @@ class DISPLAY
 		//Reindex files to zero
 		$files = array_values($files);
 		//TODO: convert 2 to last file played
+		$thumbnail = str_replace('zoom=1','zoom=2',$book['thumbnail']);
 		$html = '';
-		$html .= '<div class="bookPlayerContainer">';
-		$html .= '<div class="bookThumbnail"><img class="bookThumbnail" src="' . $book['thumbnail'] . '" /></div>';
+		$html .= '<div class="bookPlayerContainer" onclick="play();">';
+		$html .= '<div class="bookThumbnail"><img class="bookThumbnail" src="' . $thumbnail . '" />
+			<img id="playOverlay" src="images/play.png"/></div>';
 		$html .= '<div class="bookDescription"><span class="bookDescription">' . $book['description'] . '</span></div>';
 		$html .= '<div class="bookPlayerControls">';
 		$html .= '<audio id="bookAudio" preload="auto" controls="" onended="nextTrack()">';
@@ -131,7 +133,6 @@ class DISPLAY
 						bookTime = JSON.parse(xhr.responseText);
 						console.log(bookTime);
 						playTrack(bookTime["file"]);
-						player.pause();
 						player.currentTime = bookTime["time"];
 						player.play();
 					}
@@ -139,6 +140,17 @@ class DISPLAY
 				};
 				xhr.send();
 			}; loadTime();';
+		$html .= 'function play() {
+			var overlay = document.getElementById("playOverlay");
+			if( player.paused ) {
+				player.play();
+				overlay.src = "images/play.png";
+			}
+			else {
+				player.pause();
+				overlay.src = "images/pause.png";
+			}
+			}';
 		$html .= 'setInterval(trackTime,15000);';
 		
 		$html .= '</script>';
