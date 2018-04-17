@@ -3,6 +3,22 @@
 class DISPLAY
 {
 
+	public static function showResume()
+	{
+		$bookScan = new bookScan();
+		$books = $bookScan->getResumeList();
+		$html = '<div id="resumeList">';
+		foreach($books as $book)
+		{
+			$html .= '<div class="resumeListBook">';
+			$html .= "<span class='resumeListBookTitle'>".$book['title']."</span>
+				<a href='index.php?book=".$book['id']."'>
+				<img src='".$book['thumbnail']."' class='resumeListBookThumb'/></a>
+				<span class='resumeListBookAuthor'>".$book['author']."</span>
+				</div> \n";
+		}
+		return $html;
+	}
 	public static function showAuthorList()
 	{
 		$bookScan = new bookScan();
