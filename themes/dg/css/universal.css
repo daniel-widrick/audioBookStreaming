@@ -3,6 +3,13 @@ body {
 	color: #4bf442;
 }
 
+a {
+	color: #aaffaa;
+}
+a:hover {
+	color: #bbb;
+}
+
 .centeredContainer {
 	width: 700px;
 	background-color: #000;
