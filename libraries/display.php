@@ -145,17 +145,21 @@ class DISPLAY
 				xhr.send();
 			}; loadTime();';
 		$html .= 'function play() {
-			var overlay = document.getElementById("playOverlay");
-			if( player.paused ) {
+			if( player.paused ) 
 				player.play();
-				overlay.src = "images/play.png";
-			}
-			else {
+			else 
 				player.pause();
-				overlay.src = "images/pause.png";
-			}
+			syncPlayOverlay();
 			}';
+		$html .= 'function syncPlayOverlay() { 
+				var overlay = document.getElementById("playOverlay");
+			if( player.paused ) 
+                                overlay.src = "images/pause.png";
+                        else 
+                                overlay.src = "images/play.png";
+                        }';
 		$html .= 'setInterval(trackTime,15000);';
+		$html .= 'setTimeout(syncPlayOverlay,3000);';
 		
 		$html .= '</script>';
 		return $html;
