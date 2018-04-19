@@ -77,7 +77,7 @@ class DISPLAY
 		$html .= '<ol class="bookTrackList">';
 		foreach($files as $num => $track)
 		{
-			$html .= "<li id='$num' class='bookTrack' onclick='playTrack($num)'>" . $track . '</li>';
+			$html .= "<li id='$num' class='bookTrack' onclick='playTrack($num)'>" . $track . " ($track)</li>";
 		}
 		$html .= '</ol>';
 		$html .= '</div>';
@@ -130,6 +130,10 @@ class DISPLAY
 					if(xhr.status === 200) {
 						//load time&file
 						console.log("repsone: " + xhr.responseText);
+						if(xhr.response == "false") {
+							playTrack(0);
+							return;
+						}
 						bookTime = JSON.parse(xhr.responseText);
 						console.log(bookTime);
 						playTrack(bookTime["file"]);
