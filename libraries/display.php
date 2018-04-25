@@ -93,7 +93,7 @@ class DISPLAY
 			}';
 		$html .= 'highlightTrack();';
 		$html .= 'function nextTrack() {
-				var nextIndex = fileIndex+1;
+				var nextIndex = parseInt(fileIndex)+1;
 				if( nextIndex > fileList.length ) nextIndex = 0;
 				fileIndex = nextIndex;
 				playTrack(nextIndex);
