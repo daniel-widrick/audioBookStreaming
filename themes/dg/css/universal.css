@@ -50,7 +50,7 @@ a:hover {
 #resumeList {
 	min-width: 400px;
 	width: auto;
-	overflow-x: scroll;
+	overflow-x: auto;
 	white-space: nowrap;
 }
 .resumeListBook {
