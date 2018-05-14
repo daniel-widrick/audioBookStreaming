@@ -10,11 +10,9 @@ a:hover {
 	color: #bbb;
 }
 
-.centeredContainer {
-	width: 700px;
+#loginContainer {
+	max-width: 700px;
 	background-color: #000;
-	font-family: monospace;
-    	font-size: 3em;
 	opacity: 0.5;
 	margin: 60 auto;
 	color: #40ec4f;
@@ -24,42 +22,52 @@ a:hover {
 .loginRow input {
 	margin-bottom: 5px;
 	margin-top: 5px;
-	font-size: 1em;
+}
+.loginRow label {
+	margin-right: 5px;
 }
 
 .authorList {
 	display: block;
-	width: 600px;
-	font-size: 1.5em;
+	min-width: 400px;
 	background: #111;
 	clear: both;
 }
 
 .authorItem {
 	display: block;
-	width: 600px;
+	min-width: 400px;
 	font-size: 2em;
 	background: #111;
 	opacity: 0.5;
 }
 
 .authorItem ul {
-	font-size: .5em;
 	display: none;
 }
 
 
+#resumeList {
+	min-width: 400px;
+	width: auto;
+	overflow-x: auto;
+	white-space: nowrap;
+}
 .resumeListBook {
-	display: block;
-	width: 150px;
-	float: left;
+	display: inline-block;
+	min-width: 190px;
+	min-height: 290px;
+	border: 1px solid #fff;
+	text-align: center;
+}
+.resumeListBookTitle {
+	padding: 2px;
 }
 #bookAudio {
 	width: 95%;
 }
 .bookThumbnail {
 	width: 300px;
-	display: block;
 	margin-left: auto;
 	margin-right:auto;
 }

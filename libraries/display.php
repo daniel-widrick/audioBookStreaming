@@ -7,16 +7,20 @@ class DISPLAY
 	{
 		$bookScan = new bookScan();
 		$books = $bookScan->getResumeList();
-		$html = '<div id="resumeList">';
+		$html = '';	
+		$html .= '<h2>Resume Title</h2>';
+		$html .= '<div id="resumeList">';
+		$books = array_reverse($books);
 		foreach($books as $book)
 		{
 			$html .= '<div class="resumeListBook">';
-			$html .= "<span class='resumeListBookTitle'>".$book['title']."</span>
+			$html .= "<h4 class='resumeListBookTitle'>".$book['title']."</h4>
 				<a href='index.php?book=".$book['id']."'>
 				<img src='".$book['thumbnail']."' class='resumeListBookThumb'/></a>
-				<span class='resumeListBookAuthor'>".$book['author']."</span>
+				<h4 class='resumeListBookAuthor'>".$book['author']."</h4>
 				</div> \n";
 		}
+		$html .= '</div><hr />';
 		return $html;
 	}
 	public static function showAuthorList()
@@ -77,7 +81,7 @@ class DISPLAY
 		$html .= '<ol class="bookTrackList">';
 		foreach($files as $num => $track)
 		{
-			$html .= "<li id='$num' class='bookTrack' onclick='playTrack($num)'>" . $track . '</li>';
+			$html .= "<li id='$num' class='bookTrack' onclick='playTrack($num)'>" . $track . " ($track)</li>";
 		}
 		$html .= '</ol>';
 		$html .= '</div>';
@@ -93,7 +97,7 @@ class DISPLAY
 			}';
 		$html .= 'highlightTrack();';
 		$html .= 'function nextTrack() {
-				var nextIndex = fileIndex+1;
+				var nextIndex = parseInt(fileIndex)+1;
 				if( nextIndex > fileList.length ) nextIndex = 0;
 				fileIndex = nextIndex;
 				playTrack(nextIndex);
@@ -130,6 +134,10 @@ class DISPLAY
 					if(xhr.status === 200) {
 						//load time&file
 						console.log("repsone: " + xhr.responseText);
+						if(xhr.response == "false") {
+							playTrack(0);
+							return;
+						}
 						bookTime = JSON.parse(xhr.responseText);
 						console.log(bookTime);
 						playTrack(bookTime["file"]);
