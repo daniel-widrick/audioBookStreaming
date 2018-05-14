@@ -10,6 +10,7 @@ class DISPLAY
 		$html = '';	
 		$html .= '<h2>Resume Title</h2>';
 		$html .= '<div id="resumeList">';
+		$books = array_reverse($books);
 		foreach($books as $book)
 		{
 			$html .= '<div class="resumeListBook">';
