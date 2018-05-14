@@ -7,16 +7,19 @@ class DISPLAY
 	{
 		$bookScan = new bookScan();
 		$books = $bookScan->getResumeList();
-		$html = '<div id="resumeList">';
+		$html = '';	
+		$html .= '<h2>Resume Title</h2>';
+		$html .= '<div id="resumeList">';
 		foreach($books as $book)
 		{
 			$html .= '<div class="resumeListBook">';
-			$html .= "<span class='resumeListBookTitle'>".$book['title']."</span>
+			$html .= "<h4 class='resumeListBookTitle'>".$book['title']."</h4>
 				<a href='index.php?book=".$book['id']."'>
 				<img src='".$book['thumbnail']."' class='resumeListBookThumb'/></a>
-				<span class='resumeListBookAuthor'>".$book['author']."</span>
+				<h4 class='resumeListBookAuthor'>".$book['author']."</h4>
 				</div> \n";
 		}
+		$html .= '</div><hr />';
 		return $html;
 	}
 	public static function showAuthorList()
