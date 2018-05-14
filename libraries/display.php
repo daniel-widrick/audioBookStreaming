@@ -13,10 +13,11 @@ class DISPLAY
 		$books = array_reverse($books);
 		foreach($books as $book)
 		{
+			$thumbnail = str_replace('http:','https:',$book['thumbnail']);
 			$html .= '<div class="resumeListBook">';
 			$html .= "<h4 class='resumeListBookTitle'>".$book['title']."</h4>
 				<a href='index.php?book=".$book['id']."'>
-				<img src='".$book['thumbnail']."' class='resumeListBookThumb'/></a>
+				<img src='".$thumbnail."' class='resumeListBookThumb'/></a>
 				<h4 class='resumeListBookAuthor'>".$book['author']."</h4>
 				</div> \n";
 		}
@@ -69,6 +70,7 @@ class DISPLAY
 		$files = array_values($files);
 		//TODO: convert 2 to last file played
 		$thumbnail = str_replace('zoom=1','zoom=2',$book['thumbnail']);
+		$thumbnail = str_replace('http:','https:',$thumbnail);
 		$html = '';
 		$html .= '<div class="bookPlayerContainer" onclick="play();">';
 		$html .= '<div class="bookThumbnail"><img class="bookThumbnail" src="' . $thumbnail . '" />
