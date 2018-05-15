@@ -3,3 +3,4 @@ repository
 repository/*
 config.php
 infex.php.old
+*.swp
