@@ -24,7 +24,6 @@ switch($_GET['mode'])
 
 function getUsername()
 {
-	var_dump($_SESSION);
 	if(isset($_SESSION['username']) && $_SESSION['username'] != '')
 	{
 		header('HTTP/1.1 200 OK');
