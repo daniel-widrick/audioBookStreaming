@@ -14,6 +14,18 @@
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
  <link rel="stylesheet" type="text/css" href="themes/dg/css/universal.css" />
+<style>
+.headerContainer {
+	background-color: #222;
+}
+.row {
+	margin-left: 0px;
+}
+.resumeMEdiaContainer {
+	width: auto;
+	overflow: auto;
+}
+</style>
 </head>
 <body>
 
@@ -35,6 +47,19 @@
 	</form>
 </div>
 <!-- End Login Screen -->
+<div id="mainContainer">
+ <div class="row headerContainer" id="headerContainer">
+  <div class="col-sm-2"><h1>Audiobooks</h1></div>
+  <div class="col-sm-6"> </div>
+  <div class="col-sm-2">username</div>
+ </div>
+
+ <div id="mediaSelectContainer">
+  <h2>Continue Listening</h2>
+  <div class="row resumeMediaContainer" id="resumeMediaContainer">
+  </div>
+ </div>
+</div>
  
 
 </div>
