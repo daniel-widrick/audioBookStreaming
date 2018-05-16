@@ -2,3 +2,4 @@ database/database.sqlite3
 repository
 repository/*
 config.php
+*.swp
