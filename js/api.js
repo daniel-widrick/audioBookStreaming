@@ -1,6 +1,7 @@
 var username = false;
 var loginFeedbackEl = "";
 var loginScreenEl = "";
+var resumeMediaContainerEl = "";
 
 function apiCall(endPoint,method,parameters,content,callBack)
 {
@@ -27,6 +28,29 @@ function apiCall(endPoint,method,parameters,content,callBack)
 		xhr.send();
 }
 
+
+function getResumeList()
+{
+	apiCall("bookList","GET","mode=getResumeList","",getResumeListCallback)
+}
+function getResumeListCallback(rsp)
+{
+	debug(rsp);
+	resumeMediaContainerEl.style.display = "flex";
+	rsp = JSON.parse(rsp);
+	rsp.forEach(function(book) {
+		debug(book);
+		var bookCardEl = document.createElement("div");
+		bookCardEl.classList.add('card');
+		bookCardEl.classList.add('col-sm-1.5');
+		bookCardEl.classList.add('bookCard');
+		bookCardEl.innerHTML = "<h4>" + book["title"] + "</h4>";
+		bookCardEl.innerHTML += "<img src='" + book["thumbnail"] + "' />";
+		bookCardEl.innerHTML += "<h4>" + book["author"] + "</h4>";
+		resumeMediaContainerEl.appendChild(bookCardEl);
+	});
+
+}
 function getUsername()
 {
 	apiCall("authentication","GET","mode=getUsername","",getUsernameCallback)
@@ -96,7 +120,9 @@ function runOnLoad()
 {
 	loginFeedbackEl = document.getElementById("loginFeedBack");
 	loginScreenEl = document.getElementById("loginContainer");
+	resumeMediaContainerEl = document.getElementById("resumeMediaContainer");
 	getUsername();
+	getResumeList();
 }
 
 function debug(msg)

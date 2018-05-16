@@ -25,6 +25,18 @@
 	width: auto;
 	overflow: auto;
 }
+.bookCard {
+	background-color: #111;
+	margin-left: 5px;
+	padding: 3px;
+	text-align: center;
+	width: 215px;
+}
+.bookCard img {
+	width: 128px;
+	margin-left: auto;
+	margin-right: auto;
+}
 </style>
 </head>
 <body>
