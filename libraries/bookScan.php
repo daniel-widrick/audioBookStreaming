@@ -11,7 +11,18 @@ class bookScan
 		$this->pdo = new PDO('sqlite:database/database.sqlite3');
 	}
 
-
+	public function finishBook($book)
+	{
+		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$query = "INSERT INTO bookFinish (user, book, date)
+			values(:username, :book, :date)";
+		$insertStmt = $this->pdo->prepare($query);
+		$insertStmt->bindParam(':username',$_SESSION['username']);
+		$insertStmt->bindParam(':book',$book);
+		$t = time();
+		$insertStmt->bindParam(':date',$t);
+		return $insertStmt->execute();
+	}
 	public function getResumeList()
 	{
 		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

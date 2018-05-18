@@ -100,7 +100,11 @@ class DISPLAY
 		$html .= 'highlightTrack();';
 		$html .= 'function nextTrack() {
 				var nextIndex = parseInt(fileIndex)+1;
-				if( nextIndex > fileList.length ) nextIndex = 0;
+				if( nextIndex >= fileList.length ) {
+					//Finished Book!
+					finishBook();
+					nextIndex = 0;
+				}
 				fileIndex = nextIndex;
 				playTrack(nextIndex);
 			}
@@ -161,6 +165,16 @@ class DISPLAY
 				overlay.src = "images/pause.png";
 			}
 			}';
+		$html .= 'function finishBook() {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET","api/finishBook.php?book='. $_GET['book'].'");
+			xhr.onload = function() {
+				if(xhr.status === 200) {
+					console.log("finished book: " + bookid);
+				}else { console.log("finished book call failed"); }
+			};
+			xhr.send();	
+		}';
 		$html .= 'setInterval(trackTime,15000);';
 		
 		$html .= '</script>';
